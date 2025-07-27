@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chandan Mishra | AI/ML Expert & Innovation Leader</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: #f1f1f1;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        #three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.8;
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Enhanced Header Styles */
+        header {
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.95), rgba(26, 26, 26, 0.95));
+            backdrop-filter: blur(15px);
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 209, 0.1), transparent);
+            animation: shimmer 4s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        header h1 {
+            color: #00ffd1;
+            font-size: clamp(3rem, 6vw, 5rem);
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(0, 255, 209, 0.6);
+            animation: glow 3s ease-in-out infinite alternate;
+            position: relative;
+            z-index: 2;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        @keyframes glow {
+            from { 
+                text-shadow: 0 0 20px rgba(0, 255, 209, 0.5), 0 0 30px rgba(0, 255, 209, 0.3); 
+            }
+            to { 
+                text-shadow: 0 0 40px rgba(0, 255, 209, 0.8), 0 0 60px rgba(0, 255, 209, 0.4), 0 0 80px rgba(0, 255, 209, 0.2); 
+            }
+        }
+
+        .subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            margin-bottom: 40px;
+            color: #ccc;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 0.5s both;
+            background: linear-gradient(45deg, #ccc, #00ffd1, #ccc);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 3s ease infinite, fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .socials {
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out 1s both;
+            margin-top: 30px;
+        }
+
+        .socials a {
+            color: #00ffd1;
+            margin: 0 20px;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            display: inline-block;
+            position: relative;
+        }
+
+        .socials a::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(0, 255, 209, 0.2);
+            border-radius: 50%;
+            transition: all 0.4s ease;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .socials a:hover::before {
+            width: 60px;
+            height: 60px;
+        }
+
+        .socials a:hover {
+            transform: translateY(-8px) scale(1.3);
+            text-shadow: 0 8px 20px rgba(0, 255, 209, 0.6);
+        }
+
+        /* Enhanced Section Styles */
+        .section {
+            padding: 100px 20px;
+            max-width: 1400px;
+            margin: auto;
+            position: relative;
+        }
+
+        .section h2 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 50px;
+            color: #00ffd1;
+            text-align: center;
+            position: relative;
+            font-weight: 700;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #00ffd1, transparent);
+            border-radius: 2px;
+        }
+
+        .highlight {
+            color: #00ffd1;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(0, 255, 209, 0.4);
+            position: relative;
+        }
+
+        /* Technical Expertise Section */
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .expertise-category {
+            background: linear-gradient(135deg, rgba(27, 27, 27, 0.9), rgba(17, 17, 17, 0.9));
+            padding: 40px;
+            border-radius: 25px;
+            border: 1px solid rgba(0, 255, 209, 0.3);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .expertise-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 209, 0.1), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .expertise-category:hover::before {
+            left: 100%;
+        }
+
+        .expertise-category:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px rgba(0, 255, 209, 0.3);
+            border-color: rgba(0, 255, 209, 0.6);
+        }
+
+        .expertise-category h3 {
+            color: #00ffd1;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .expertise-category i {
+            font-size: 2rem;
+            background: linear-gradient(45deg, #00ffd1, #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .skills-list {
+            list-style: none;
+            position: relative;
+            z-index: 2;
+        }
+
+        .skills-list li {
+            padding: 12px 0;
+            color: #ccc;
+            font-size: 1.1rem;
+            position: relative;
+            padding-left: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .skills-list li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: #00ffd1;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .skills-list li:hover {
+            color: #00ffd1;
+            transform: translateX(10px);
+        }
+
+        .skills-list li:hover::before {
+            transform: scale(1.3);
+        }
+
+        /* Skills Progress Bars */
+        .skills-progress {
+            margin-top: 30px;
+        }
+
+        .skill-item {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .skill-name {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #f1f1f1;
+        }
+
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffd1, #00a8cc);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 2s ease-in-out;
+            position: relative;
+        }
+
+        .skill-progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmerBar 2s ease-in-out infinite;
+        }
+
+        @keyframes shimmerBar {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Latest Highlight Section */
+        .highlight-section {
+            background: linear-gradient(135deg, rgba(27, 27, 27, 0.9), rgba(17, 17, 17, 0.9));
+            border-radius: 30px;
+            padding: 50px;
+            margin: 60px 0;
+            border: 2px solid rgba(0, 255, 209, 0.3);
+            backdrop-filter: blur(15px);
+            animation: slideInLeft 1s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 209, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .highlight-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .highlight-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: rgba(0, 255, 209, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 209, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 255, 209, 0.2);
+            transform: scale(1.05);
+        }
+
+        /* Video Section */
+        .video-section {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.8), rgba(27, 27, 27, 0.8));
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 60px 0;
+            border: 1px solid rgba(0, 255, 209, 0.2);
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin: 40px auto 0;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 255, 209, 0.3);
+            transition: transform 0.4s ease;
+        }
+
+        .video-container:hover {
+            transform: scale(1.03);
+        }
+
+        .video-container iframe {
+            width: 100%;
+            height: 500px;
+            border: none;
+        }
+
+        /* Enhanced Projects Carousel */
+        .projects-carousel {
+            display: flex;
+            gap: 40px;
+            overflow-x: auto;
+            padding: 30px 0 50px 0;
+            scroll-behavior: smooth;
+        }
+
+        .projects-carousel::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .projects-carousel::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .projects-carousel::-webkit-scrollbar-thumb {
+            background: linear-gradient(90deg, #00ffd1, #00a8cc);
+            border-radius: 10px;
+        }
+
+        .project-card {
+            flex: 0 0 400px;
+            background: linear-gradient(135deg, rgba(27, 27, 27, 0.95), rgba(17, 17, 17, 0.95));
+            padding: 40px;
+            border-radius: 25px;
+            border: 2px solid rgba(0, 255, 209, 0.3);
+            backdrop-filter: blur(15px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 209, 0.15), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .project-card:hover::before {
+            left: 100%;
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 60px rgba(0, 255, 209, 0.4);
+            border-color: rgba(0, 255, 209, 0.6);
+        }
+
+        .project-card h3 {
+            color: #00ffd1;
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 2;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: #ccc;
+            line-height: 1.7;
+            position: relative;
+            z-index: 2;
+            font-size: 1.1rem;
+        }
+
+        .project-tech {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .tech-tag {
+            background: rgba(0, 255, 209, 0.2);
+            color: #00ffd1;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(0, 255, 209, 0.3);
+        }
+
+        /* Carousel Navigation */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(135deg, rgba(0, 255, 209, 0.2), rgba(0, 168, 204, 0.2));
+            border: 2px solid #00ffd1;
+            color: #00ffd1;
+            padding: 15px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            font-size: 1.1rem;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-btn:hover::before {
+            left: 100%;
+        }
+
+        .nav-btn:hover {
+            background: #00ffd1;
+            color: #0a0a0a;
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(0, 255, 209, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, rgba(17, 17, 17, 0.95), rgba(26, 26, 26, 0.95));
+            text-align: center;
+            padding: 60px 20px;
+            font-size: 1rem;
+            color: #888;
+            border-top: 2px solid rgba(0, 255, 209, 0.3);
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffd1, transparent);
+        }
+
+        /* Floating Elements */
+        .floating-element {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: rgba(0, 255, 209, 0.4);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(0, 255, 209, 0.3);
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a, #111);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.8s ease;
+        }
+
+        .loading.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(0, 255, 209, 0.3);
+            border-top: 4px solid #00ffd1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loading-text {
+            color: #00ffd1;
+            font-size: 1.2rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .section {
+                padding: 60px 15px;
+            }
+            
+            .project-card {
+                flex: 0 0 320px;
+                padding: 30px;
+            }
+            
+            .highlight-section {
+                padding: 30px;
+                margin: 30px 0;
+            }
+
+            .expertise-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .expertise-category {
+                padding: 30px;
+            }
+
+            header {
+                padding: 60px 20px;
+                min-height: 80vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading" id="loading">
+        <div class="loader"></div>
+        <div class="loading-text">Initializing AI Portfolio...</div>
+    </div>
+
+    <canvas id="three-canvas"></canvas>
+
+    <div class="container">
+        <header>
+            <div class="floating-element" style="top: 15%; left: 8%; animation-delay: 0s;"></div>
+            <div class="floating-element" style="top: 70%; right: 12%; animation-delay: 2s;"></div>
+            <div class="floating-element" style="top: 25%; right: 25%; animation-delay: 4s;"></div>
+            <div class="floating-element" style="top: 60%; left: 20%; animation-delay: 6s;"></div>
+            
+            <h1>Chandan Mishra</h1>
+            <p class="subtitle">AI/ML Expert | GenAI Innovator | Deep Learning Specialist | Real-Time AI Voice Agent Creator</p>
+            <div class="socials">
+                <a href="mailto:cm505551@gmail.com" title="Email"><i class="fas fa-envelope"></i></a>
+                <a href="https://github.com/ChandanM3686" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/chandan-mishra-285a22250/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </header>
+
+        <section class="section">
+            <h2>🚀 Latest Highlight</h2>
+            <div class="highlight-section">
+                <div class="highlight-content">
+                    <p style="font-size: 1.3rem; margin-bottom: 30px;">I recently built a state-of-the-art <span class="highlight">AI Voice Agent</span> capable of <strong>real-time phone calls</strong> with human-like interaction. This agent is designed for industries like sales, support, and automation.</p>
+                    
+                    <div class="highlight-features">
+                        <div class="feature-item">
+                            <strong>⚡ Ultra-low latency</strong><br>
+                            <small>Sub-200ms response time</small>
+                        </div>
+                        <div class="feature-item">
+                            <strong>🎭 Human-like interaction</strong><br>
+                            <small>Natural conversation flow</small>
+                        </div>
+                        <div class="feature-item">
+                            <strong>🔧 Highly customizable</strong><br>
+                            <small>Adaptable to any business</small>
+                        </div>
+                        <div class="feature-item">
+                            <strong>🏢 Enterprise ready</strong><br>
+                            <small>Scalable integration</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section video-section">
+            <h2>🎬 Watch Demo</h2>
+            <p style="font-size: 1.2rem; color: #ccc; margin-bottom: 20px;">Experience the future of AI voice interaction</p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/EPNWbgMzNXY" allowfullscreen></iframe>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🧠 Technical Expertise</h2>
+            <div class="expertise-grid">
+                <div class="expertise-category">
+                    <h3><i class="fas fa-robot"></i> Artificial Intelligence & Machine Learning</h3>
+                    <ul class="skills-list">
+                        <li>Machine Learning Algorithms & Model Development</li>
+                        <li>Deep Learning & Neural Networks (TensorFlow, PyTorch)</li>
+                        <li>Computer Vision & OpenCV</li>
+                        <li>Natural Language Processing (NLP)</li>
+                        <li>Reinforcement Learning</li>
+                        <li>MLOps & Model Deployment</li>
+                    </ul>
+                    <div class="skills-progress">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Python & ML Libraries</span>
+                                <span>95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="95"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Deep Learning</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Computer Vision</span>
+                                <span>88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="88"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expertise-category">
+                    <h3><i class="fas fa-brain"></i> Generative AI & LLMs</h3>
+                    <ul class="skills-list">
+                        <li>Large Language Models (GPT, Claude, Gemini)</li>
+                        <li>Retrieval-Augmented Generation (RAG)</li>
+                        <li>LangChain & LangGraph</li>
+                        <li>OpenAI API & Fine-tuning</li>
+                        <li>Prompt Engineering & Optimization</li>
+                        <li>Vector Databases (Pinecone, Weaviate, Chroma)</li>
+                    </ul>
+                    <div class="skills-progress">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>LLM Integration</span>
+                                <span>93%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="93"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>RAG Systems</span>
+                                <span>91%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="91"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>LangChain</span>
+                                <span>89%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="89"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expertise-category">
+                    <h3><i class="fas fa-cogs"></i> AI Agents & Automation</h3>
+                    <ul class="skills-list">
+                        <li>Multi-Agent Systems & Orchestration</li>
+                        <li>MCP (Model Context Protocol) Servers</li>
+                        <li>Autonomous AI Agents</li>
+                        <li>Workflow Automation (n8n, Zapier)</li>
+                        <li>Real-time Voice AI Agents</li>
+                        <li>Enterprise AI Integration</li>
+                    </ul>
+                    <div class="skills-progress">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>AI Agent Development</span>
+                                <span>92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="92"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>MCP Servers</span>
+                                <span>85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Voice AI</span>
+                                <span>90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="90"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="expertise-category">
+                    <h3><i class="fas fa-cloud"></i> Development & Deployment</h3>
+                    <ul class="skills-list">
+                        <li>Python, JavaScript, TypeScript</li>
+                        <li>FastAPI, Flask, Node.js</li>
+                        <li>Docker & Kubernetes</li>
+                        <li>AWS, GCP, Azure Cloud Platforms</li>
+                        <li>CI/CD Pipelines</li>
+                        <li>Database Management (SQL, NoSQL, Vector DBs)</li>
+                    </ul>
+                    <div class="skills-progress">
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Python Development</span>
+                                <span>96%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="96"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>Cloud Deployment</span>
+                                <span>87%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="87"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="skill-name">
+                                <span>API Development</span>
+                                <span>94%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress-fill" data-width="94"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>💼 Professional Experience</h2>
+            <div class="highlight-section">
+                <div class="highlight-content">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;">
+                        <div>
+                            <h3 style="color: #00ffd1; margin-bottom: 15px;">🚀 Project Portfolio</h3>
+                            <p>Successfully delivered <span class="highlight">50+ AI/ML freelance projects</span> with verified client satisfaction and measurable business impact.</p>
+                        </div>
+                        <div>
+                            <h3 style="color: #00ffd1; margin-bottom: 15px;">🎯 Specialization Focus</h3>
+                            <p>Deep expertise in <span class="highlight">GenAI, RAG systems, LangChain</span>, OpenAI integration, and enterprise-grade AI automation solutions.</p>
+                        </div>
+                        <div>
+                            <h3 style="color: #00ffd1; margin-bottom: 15px;">🏆 Innovation Leadership</h3>
+                            <p>Pioneer in developing <span class="highlight">real-time AI voice agents</span> and multi-modal AI systems for various industries.</p>
+                        </div>
+                        <div>
+                            <h3 style="color: #00ffd1; margin-bottom: 15px;">🔬 Research & Development</h3>
+                            <p>Continuous exploration of cutting-edge AI technologies including <span class="highlight">MCP servers, autonomous agents</span>, and advanced ML algorithms.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🧠 Featured Projects</h2>
+            <div class="projects-carousel" id="projectsCarousel">
+                <div class="project-card">
+                    <h3>AI Stock Recommender</h3>
+                    <p>Advanced ML-based stock recommendation system using ensemble methods, technical indicators, and sentiment analysis. Features real-time data processing, risk assessment, and portfolio optimization.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Scikit-learn</span>
+                        <span class="tech-tag">AWS</span>
+                        <span class="tech-tag">FastAPI</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>SaaS AI Chatbot Builder</h3>
+                    <p>No-code platform for building intelligent chatbots using RAG, LangChain & OpenAI. Features document ingestion, conversation analytics, multi-language support, and enterprise integrations.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">LangChain</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">Vector DB</span>
+                        <span class="tech-tag">React</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>AI Search Engine (Cross-platform)</h3>
+                    <p>Intelligent search system across Gmail, OneDrive, and cloud storage using advanced vector embeddings, semantic search, and AI-powered content understanding with real-time indexing.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Embeddings</span>
+                        <span class="tech-tag">Pinecone</span>
+                        <span class="tech-tag">NLP</span>
+                        <span class="tech-tag">APIs</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>AI Automation Suite (n8n)</h3>
+                    <p>Comprehensive automation platform for HR, Sales, and Support workflows using intelligent agents, decision trees, and OpenAI integration for complex business process automation.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">n8n</span>
+                        <span class="tech-tag">OpenAI</span>
+                        <span class="tech-tag">Webhooks</span>
+                        <span class="tech-tag">APIs</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Medical Report Summarizer</h3>
+                    <p>HIPAA-compliant LLM-powered tool for medical report analysis and summarization. Features clinical terminology extraction, risk assessment, and integration with healthcare management systems.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Medical NLP</span>
+                        <span class="tech-tag">HIPAA</span>
+                        <span class="tech-tag">LLMs</span>
+                        <span class="tech-tag">Healthcare</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Real-Time Calling Bot (Voice AI)</h3>
+                    <p>State-of-the-art voice AI agent with sub-200ms latency, natural conversation flow, emotion detection, and seamless integration with telephony systems for enterprise use.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Voice AI</span>
+                        <span class="tech-tag">Real-time</span>
+                        <span class="tech-tag">WebRTC</span>
+                        <span class="tech-tag">Speech</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>Computer Vision Analytics</h3>
+                    <p>Advanced CV system for real-time object detection, facial recognition, and behavior analysis using OpenCV, YOLO, and custom neural networks for security and retail applications.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">OpenCV</span>
+                        <span class="tech-tag">YOLO</span>
+                        <span class="tech-tag">PyTorch</span>
+                        <span class="tech-tag">Real-time</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <h3>MCP Server Framework</h3>
+                    <p>Custom Model Context Protocol server implementation for seamless AI model integration, context management, and multi-agent orchestration with enterprise-grade security and scalability.</p>
+                    <div class="project-tech">
+                        <span class="tech-tag">MCP</span>
+                        <span class="tech-tag">Multi-Agent</span>
+                        <span class="tech-tag">Protocol</span>
+                        <span class="tech-tag">Enterprise</span>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-nav">
+                <button class="nav-btn" onclick="scrollCarousel('left')">← Previous</button>
+                <button class="nav-btn" onclick="scrollCarousel('right')">Next →</button>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Chandan Mishra • AI/ML Innovation Leader • Built with ❤️ using Advanced Web Technologies & Three.js</p>
+        </footer>
+    </div>
+
+    <script>
+        // Enhanced Three.js Background Animation
+        let scene, camera, renderer, particles, particleSystem;
+        let mouseX = 0, mouseY = 0;
+
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            renderer = new THREE.WebGLRenderer({ 
+                canvas: document.getElementById('three-canvas'), 
+                alpha: true,
+                antialias: true 
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+
+            // Create enhanced particle system
+            const geometry = new THREE.BufferGeometry();
+            const particleCount = 2000;
+            const positions = new Float32Array(particleCount * 3);
+            const colors = new Float32Array(particleCount * 3);
+            const sizes = new Float32Array(particleCount);
+
+            for (let i = 0; i < particleCount * 3; i += 3) {
+                positions[i] = (Math.random() - 0.5) * 3000;
+                positions[i + 1] = (Math.random() - 0.5) * 3000;
+                positions[i + 2] = (Math.random() - 0.5) * 3000;
+
+                // Gradient colors from cyan to blue
+                const t = Math.random();
+                colors[i] = t * 0.2; // Red
+                colors[i + 1] = 0.8 + t * 0.2; // Green
+                colors[i + 2] = 0.8 + t * 0.2; // Blue
+
+                sizes[i / 3] = Math.random() * 3 + 1;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+            geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+            const material = new THREE.PointsMaterial({
+                size: 3,
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.8,
+                sizeAttenuation: true
+            });
+
+            particles = new THREE.Points(geometry, material);
+            scene.add(particles);
+
+            // Add connecting lines
+            const lineGeometry = new THREE.BufferGeometry();
+            const linePositions = [];
+            const lineColors = [];
+
+            for (let i = 0; i < 500; i++) {
+                const x1 = (Math.random() - 0.5) * 2000;
+                const y1 = (Math.random() - 0.5) * 2000;
+                const z1 = (Math.random() - 0.5) * 2000;
+                
+                const x2 = x1 + (Math.random() - 0.5) * 200;
+                const y2 = y1 + (Math.random() - 0.5) * 200;
+                const z2 = z1 + (Math.random() - 0.5) * 200;
+
+                linePositions.push(x1, y1, z1, x2, y2, z2);
+                lineColors.push(0, 1, 0.82, 0, 1, 0.82);
+            }
+
+            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+            lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
+
+            const lineMaterial = new THREE.LineBasicMaterial({
+                vertexColors: true,
+                transparent: true,
+                opacity: 0.3
+            });
+
+            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+            scene.add(lines);
+
+            camera.position.z = 1000;
+            animate();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Enhanced particle animation
+            particles.rotation.x += 0.0003;
+            particles.rotation.y += 0.0005;
+
+            // Mouse interaction
+            particles.rotation.x += mouseY * 0.00005;
+            particles.rotation.y += mouseX * 0.00005;
+
+            // Pulsing effect
+            const time = Date.now() * 0.001;
+            particles.material.opacity = 0.6 + Math.sin(time) * 0.2;
+
+            renderer.render(scene, camera);
+        }
+
+        // Enhanced carousel functionality
+        function scrollCarousel(direction) {
+            const carousel = document.getElementById('projectsCarousel');
+            const scrollAmount = 440;
+            
+            if (direction === 'left') {
+                carousel.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            } else {
+                carousel.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            }
+        }
+
+        // Skill bar animation
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-progress-fill');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const width = entry.target.getAttribute('data-width');
+                        setTimeout(() => {
+                            entry.target.style.width = width + '%';
+                        }, 200);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            skillBars.forEach(bar => observer.observe(bar));
+        }
+
+        // Enhanced scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.section, .project-card, .expertise-category').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(50px)';
+                el.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+                observer.observe(el);
+            });
+        }
+
+        // Mouse tracking for parallax
+        document.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth) - 0.5;
+            mouseY = (e.clientY / window.innerHeight) - 0.5;
+        });
+
+        // Window resize handler
+        function handleResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            // Hide loading screen with delay
+            setTimeout(() => {
+                document.getElementById('loading').classList.add('hidden');
+            }, 2000);
+
+            // Initialize Three.js
+            initThreeJS();
+            
+            // Setup animations
+            setupScrollAnimations();
+            animateSkillBars();
+            
+            // Add resize listener
+            window.addEventListener('resize', handleResize);
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add scroll-triggered animations for floating elements
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = scrolled * 0.5;
+            
+            document.querySelectorAll('.floating-element').forEach((el, index) => {
+                el.style.transform = `translateY(${parallax + index * 20}px)`;
+            });
+        });
+
+        // Add typing effect for loading text
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const loadingText = document.querySelector('.loading-text');
+            if (loadingText) {
+                typeWriter(loadingText, 'Initializing AI Portfolio...', 80);
+            }
+        });
+    </script>
+</body>
+</html>
